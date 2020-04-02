@@ -7,7 +7,7 @@ For regular USRP operations, this OOT module is *not* required.
 
 ## Dependencies
 
-This OOT requires GNU Radio version 3.7.6 with gr-uhd enabled.
+This OOT requires GNU Radio version 3.8.1 with gr-uhd enabled.
 It also requires the rfnoc-devel branch of UHD to be installed.
 
 ## RFNoC
