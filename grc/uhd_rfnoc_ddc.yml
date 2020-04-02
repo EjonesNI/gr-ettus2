@@ -1,0 +1,48 @@
+id: uhd_rfnoc_streamer_ddc
+label: RFNoC DDC
+
+inputs:
+-   label: in
+    domain: rfnoc
+    dtype: complex
+    default: '1024'
+outputs:
+-   label: out
+    domain: rfnoc
+    dtype: complex
+    default: '67584'
+
+templates:
+    imports: import ettus
+    make: |-
+        ettus.rfnoc_generic(
+            self.device3,
+            uhd.stream_args(
+                cpu_format="fc32",
+                otw_format="sc16",
+                channels=range($num_chans),
+                args="input_rate={},output_rate={},fullscale={},freq={},gr_vlen={},{}".format($input_rate, $output_rate, $fullscale, $freq, ${grvlen}, "" if ${grvlen} == 1 else "spp={}".format($grvlen)),
+            ),
+            uhd.stream_args(
+                cpu_format="fc32",
+                otw_format="sc16",
+                channels=range($num_chans),
+                args="gr_vlen={},{}".format(${grvlen}, "" if ${grvlen} == 1 else "spp={}".format($grvlen)),
+            ),
+            "DDC", $block_index, $device_index,
+        )
+        for chan in xrange($num_chans):
+            self.$(id).set_arg("input_rate", float($input_rate), chan)
+            self.$(id).set_arg("output_rate", float($output_rate), chan)
+            self.$(id).set_arg("fullscale", $fullscale, chan)
+            self.$(id).set_arg("freq", $freq, chan)
+    callbacks:
+        |- for i in xrange(${num_chans}):
+            self.$(id).set_arg("freq", ${freq}, i)
+        |- for i in xrange(${num_chans}):
+            self.$(id).set_arg("input_rate", float(${input_rate}), i)
+        |- for i in xrange(${num_chans}):
+            self.$(id).set_arg("output_rate", float(${output_rate}), i)
+
+
+

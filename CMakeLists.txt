@@ -23,6 +23,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(gr-ettus CXX C)
 enable_testing()
+set(CMP0071 "NEW")
 
 #select the release build type by default to get optimization flags
 if(NOT CMAKE_BUILD_TYPE)
@@ -140,7 +141,7 @@ if(NOT UHD_RFNOC_FOUND)
     message(FATAL_ERROR "RFNoC not found.")
 endif(NOT UHD_RFNOC_FOUND)
 
-find_package(PythonLibs 2)
+find_package(PythonLibs 3)
 if(NOT PYTHONLIBS_FOUND)
     message(FATAL_ERROR "Python Libs not found.")
 endif(NOT PYTHONLIBS_FOUND)
@@ -166,17 +167,28 @@ find_package(Doxygen)
 # caps such as FILTER or FFT) and change the version to the minimum
 # API compatible version required.
 set(GR_REQUIRED_COMPONENTS RUNTIME UHD FILTER FFT)
-find_package(Gnuradio "3.7.6" REQUIRED)
+find_package(Gnuradio "3.8.1.0" REQUIRED)
+
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+    ${Boost_INCLUDE_DIRS}
+    ${CPPUNIT_INCLUDE_DIRS}
+    ${GNURADIO_RUNTIME_INCLUDE_DIRS}
+    ${GNURADIO_RUNTIME_INCLUDE_DIRS}/gnuradio/swig
+)
+
+link_directories(
+    ${Boost_LIBRARY_DIRS}
+    ${CPPUNIT_LIBRARY_DIRS}
+    ${GNURADIO_RUNTIME_LIBRARY_DIRS}
+)
+
 
 
 ########################################################################
 # Setup doxygen option
 ########################################################################
-if(DOXYGEN_FOUND)
-	option(ENABLE_DOXYGEN "Build docs using Doxygen" ON)
-else(DOXYGEN_FOUND)
-	option(ENABLE_DOXYGEN "Build docs using Doxygen" OFF)
-endif(DOXYGEN_FOUND)
+option(ENABLE_DOXYGEN "Build docs using Doxygen" OFF) #Disable as not compatible with gnuradio 3.8
 
 ########################################################################
 # Setup the include and linker paths

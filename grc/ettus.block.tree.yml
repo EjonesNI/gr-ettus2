@@ -1,0 +1,31 @@
+'[Core]':
+- UHD:
+  - RFNoC:
+     - variable_uhd_device3
+     - uhd_rfnoc_streamer_adder
+     - uhd_rfnoc_streamer_ddc
+     - uhd_rfnoc_streamer_duc
+     - uhd_rfnoc_streamer_fifo
+     - uhd_rfnoc_streamer_fft
+     - uhd_rfnoc_streamer_fir
+     - uhd_rfnoc_streamer_fosphor
+     - uhd_rfnoc_streamer_keep_one_in_n
+     - uhd_rfnoc_streamer_logpwr
+     - uhd_rfnoc_streamer_radio
+     - uhd_rfnoc_streamer_vector_iir
+     - uhd_rfnoc_streamer_window
+     - uhd_rfnoc_streamer_moving_avg
+     - uhd_rfnoc_streamer_debug
+     - uhd_rfnoc_split_stream
+     - uhd_rfnoc_fosphor_display
+     - uhd_rfnoc_ofdm_schmidlcox
+     - uhd_rfnoc_ofdm_eq
+     - uhd_rfnoc_ofdm_demap
+     - uhd_rfnoc_streamer_packet_resizer
+     - uhd_rfnoc_streamer_siggen
+     - uhd_rfnoc_streamer_dma_fifo
+     - uhd_rfnoc_digital_gain
+     - uhd_rfnoc_pdu_rx
+     - uhd_rfnoc_pdu_tx
+     - uhd_rfnoc_register_logger
+     - uhd_rfnoc_register_probe

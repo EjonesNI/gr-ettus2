@@ -27,6 +27,7 @@ set(__INCLUDED_GR_PLATFORM_CMAKE TRUE)
 ########################################################################
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(LINUX TRUE)
+    set(GNURADIO_RUNTIME_INCLUDE_DIRS "/usr/local/include")
 endif()
 
 if(LINUX AND EXISTS "/etc/debian_version")

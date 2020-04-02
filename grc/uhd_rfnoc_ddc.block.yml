@@ -1,0 +1,95 @@
+id: uhd_rfnoc_streamer_ddc
+label: RFNoC DDC
+
+inputs:
+-   label: in
+    domain: rfnoc
+    dtype: complex
+    default: '1024'
+    multiplicity: ${num_chans}
+    vlen: ${grvlen}
+
+outputs:
+-   label: out
+    domain: rfnoc
+    dtype: complex
+    default: '67584'
+    multiplicity: ${num_chans}
+    vlen: ${grvlen}
+
+parameters:
+- id: num_chans
+  label: Num Channels
+  dtype: int
+  default: 1
+- id: input_rate
+  label: Input Rate
+  dtype: real
+  default: samp_rate
+- id: output_rate
+  label: Output Rate
+  dtype: real
+  default: samp_rate
+- id: freq
+  label: Frequency (CORDIC)
+  dtype: real
+  default: 0.0
+- id: fullscale
+  label: Full scale
+  dtype: real
+  default: 1.0
+  hide: part
+  category: Advanced
+- id: block_index
+  label: Block Select
+  dtype: int
+  default: -1
+  category: RFNoC Config
+- id: device_index
+  label: Device Select
+  dtype: int
+  default: -1
+  category: RFNoC Config
+- id: fpga_module_name
+  label: FPGA Module Name
+  dtype: string
+  default: noc_block_ddc
+  category: RFNoC Config
+  hide: all
+- id: grvlen
+  label: Force Vector Length
+  dtype: int
+  default: 1
+
+templates:
+    imports: import ettus
+    make: |-
+        ettus.rfnoc_generic(
+            self.device3,
+            uhd.stream_args(
+                cpu_format="fc32",
+                otw_format="sc16",
+                channels=range(${num_chans}),
+                args="input_rate={},output_rate={},fullscale={},freq={},gr_vlen={},{}".format(${input_rate}, ${output_rate}, ${fullscale}, ${freq}, ${grvlen}, "" if (${grvlen} == 1) else "spp={}".format(${grvlen})),
+            ),
+            uhd.stream_args(
+                cpu_format="fc32",
+                otw_format="sc16",
+                channels=range(${num_chans}),
+                args="gr_vlen={},{}".format(${grvlen}, "" if ${grvlen} == 1 else "spp={}".format(${grvlen})),
+            ),
+            "DDC", ${block_index}, ${device_index},
+        )
+        for chan in xrange(${num_chans}):
+            self.${id}.set_arg("input_rate", float(${input_rate}), chan)
+            self.${id}.set_arg("output_rate", float(${output_rate}), chan)
+            self.${id}.set_arg("fullscale", ${fullscale}, chan)
+            self.${id}.set_arg("freq", ${freq}, chan)
+    callbacks: |- 
+            for i in xrange(${num_chans}):
+                self.${id}.set_arg("freq", ${freq}, i)
+                self.${id}.set_arg("input_rate", float(${input_rate}), i)
+                self.${id}.set_arg("output_rate", float(${output_rate}), i)
+
+file_format: 1
+

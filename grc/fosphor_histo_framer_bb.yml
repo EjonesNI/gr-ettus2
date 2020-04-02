@@ -1,0 +1,18 @@
+id: fosphor_histo_framer_bb
+label: RFNoC fosphor Histogram Framer
+
+inputs:
+-   label: in
+    domain: stream
+    dtype: raw
+    default: '1024'
+outputs:
+-   label: out
+    domain: stream
+    dtype: raw
+    default: '67584'
+
+templates:
+    imports: import ettus
+    make: ettus.fosphor_histo_framer_bb()
+
