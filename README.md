@@ -9,6 +9,7 @@ For regular USRP operations, this OOT module is *not* required.
 
 This OOT requires GNU Radio version 3.8.1 with gr-uhd enabled.
 It also requires the UHD 3.15-LTS to be installed.
+You will also need to install the fosphor OOT module found here: https://github.com/osmocom/gr-fosphor
 
 ## RFNoC
 
