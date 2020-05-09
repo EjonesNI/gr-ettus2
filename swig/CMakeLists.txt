@@ -29,7 +29,8 @@ endif(NOT ettus_sources)
 # Include swig generation macros
 ########################################################################
 find_package(SWIG)
-find_package(PythonLibs 2)
+set(Python_ADDITIONAL_VERSIONS 3.5)
+find_package(PythonLibs 3 REQUIRED)
 if(NOT SWIG_FOUND OR NOT PYTHONLIBS_FOUND)
     return()
 endif()
@@ -41,6 +42,7 @@ include(GrPython)
 ########################################################################
 foreach(incdir ${GNURADIO_RUNTIME_INCLUDE_DIRS})
     list(APPEND GR_SWIG_INCLUDE_DIRS ${incdir}/gnuradio/swig)
+    list(APPEND GR_SWIG_INCLUDE_DIRS /usr/include/gnuradio/swig)
 endforeach(incdir)
 
 set(GR_SWIG_LIBRARIES gnuradio-ettus)
