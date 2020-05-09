@@ -147,7 +147,7 @@ if(NOT PYTHONLIBS_FOUND)
 endif(NOT PYTHONLIBS_FOUND)
 
 if(ENABLE_QT)
-    find_package(Qt4 5.0.0 COMPONENTS QtCore QtGui QtOpenGL)
+    find_package(Qt5 5.0.0 COMPONENTS QtCore QtGui QtOpenGL)
     if(NOT QT_FOUND)
 	message(FATAL_ERROR "Qt not found.")
     endif(NOT QT_FOUND)
