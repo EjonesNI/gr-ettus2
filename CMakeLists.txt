@@ -141,10 +141,8 @@ if(NOT UHD_RFNOC_FOUND)
     message(FATAL_ERROR "RFNoC not found.")
 endif(NOT UHD_RFNOC_FOUND)
 
-find_package(PythonLibs 3)
-if(NOT PYTHONLIBS_FOUND)
-    message(FATAL_ERROR "Python Libs not found.")
-endif(NOT PYTHONLIBS_FOUND)
+set(Python_ADDITIONAL_VERSIONS 3.5)
+find_package(PythonLibs 3 REQUIRED)
 
 if(ENABLE_QT)
     find_package(Qt5 5.0.0 COMPONENTS QtCore QtGui QtOpenGL)
